@@ -17,7 +17,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #101820FF;">
                <children>
-                  <Label layoutX="88.0" layoutY="44.0" mouseTransparent="true" text="Name" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
+                  <Label layoutX="169.0" layoutY="83.0" mouseTransparent="true" text="Name" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -25,7 +25,7 @@
                         <Blend />
                      </effect>
                   </Label>
-                  <Label layoutX="64.0" layoutY="80.0" text="Surname" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
+                  <Label layoutX="145.0" layoutY="119.0" text="Surname" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -33,8 +33,8 @@
                         <Blend />
                      </effect>
                   </Label>
-                      <TextField id="txtName" fx:id="txtName" layoutX="144.0" layoutY="40.0" />
-                  <Label layoutX="67.0" layoutY="124.0" text="Number" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
+                      <TextField id="txtName" fx:id="txtName" layoutX="225.0" layoutY="79.0" />
+                  <Label layoutX="148.0" layoutY="163.0" text="Number" textAlignment="CENTER" textFill="#f2aa4c" textOverrun="LEADING_ELLIPSIS" wrapText="true">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -42,32 +42,67 @@
                         <Blend />
                      </effect>
                   </Label>
-                  <TextField id="txtSurname" fx:id="txtSurname" layoutX="144.0" layoutY="80.0" />
-                  <TextField id="txtNumber" fx:id="txtNumber" layoutX="144.0" layoutY="124.0" />
-                  <Button fx:id="btnSave" layoutX="145.0" layoutY="179.0" mnemonicParsing="false" onAction="#onSaveClick" prefHeight="31.0" prefWidth="147.0" style="-fx-background-color: #f2aa4c;" text="Save" textAlignment="CENTER" textFill="#101820" textOverrun="CLIP">
+                  <TextField id="txtSurname" fx:id="txtSurname" layoutX="225.0" layoutY="119.0" />
+                  <TextField id="txtNumber" fx:id="txtNumber" layoutX="225.0" layoutY="163.0" />
+                  <Button layoutX="226.0" layoutY="218.0" mnemonicParsing="false" onAction="#onSaveClick" prefHeight="31.0" prefWidth="147.0" style="-fx-background-color: #f2aa4c;" text="Save" textAlignment="CENTER" textFill="#101820" textOverrun="CLIP">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnClear" layoutX="145.0" layoutY="223.0" mnemonicParsing="false" onAction="#onClearClick" prefHeight="31.0" prefWidth="147.0" style="-fx-background-color: #EC4D37;" text="Clear" textAlignment="CENTER" textFill="#101820" textOverrun="CLIP">
+                  <Button layoutX="226.0" layoutY="262.0" mnemonicParsing="false" onAction="#onClearClick" prefHeight="31.0" prefWidth="147.0" style="-fx-background-color: #EC4D37;" text="Clear" textAlignment="CENTER" textFill="#101820" textOverrun="CLIP">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <Label fx:id="lblFailed" layoutX="178.0" layoutY="38.0" textFill="#ec4d37" />
                </children>
         </AnchorPane>
       </content>
     </Tab>
-    <Tab text="Users">
+    <Tab text="Users"> <!--  ####################################################### OTHER  tab ################################################  -->
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="userListTable" layoutX="-1.0" layoutY="52.0" prefHeight="321.0" prefWidth="600.0">
-    <!--                    <columns>-->
-    <!--                      <TableColumn prefWidth="75.0" text="C1" />-->
-    <!--                      <TableColumn prefWidth="75.0" text="C2" />-->
-    <!--                    </columns>-->
+                  <TableView fx:id="userListTable" layoutX="-1.0" onMouseClicked="#tableClicked" prefHeight="373.0" prefWidth="336.0">
+                        <columns>
+                           <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Name" />
+                            <TableColumn fx:id="tableColumnSurname" prefWidth="75.0" text="Surname" />
+                                <TableColumn fx:id="tableColumnNumber" prefWidth="75.0" text="Number" />
+                        </columns>
                   </TableView>
+                  <TextField fx:id="txtNameOld" layoutX="385.0" layoutY="87.0" />
+                  <TextField fx:id="txtSurnameOld" layoutX="385.0" layoutY="143.0" />
+                  <TextField fx:id="txtNumberOld" layoutX="385.0" layoutY="202.0" />
+                  <Label layoutX="385.0" layoutY="67.0" text="Name" textFill="#f2aa4c">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="385.0" layoutY="123.0" text="Surname" textFill="#f2aa4c">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="385.0" layoutY="180.0" text="Number" textFill="#f2aa4c">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="386.0" layoutY="245.0" onMouseClicked="#onUpdateClick" mnemonicParsing="false" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #006B38FF;" text="Update" textFill="#101820">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="386.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#onDeleteClicked" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #EC4D37;" text="Delete">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lblStatus" layoutX="386.0" layoutY="31.0" textFill="#adefd1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                </children>
         </AnchorPane>
       </content>

@@ -2,21 +2,36 @@ package sample;
 
 import Database.PhoneBookUsers;
 import Database.PhoneBookUsersDOA;
-import Database.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Date;
 
 public class Controller {
 
     @FXML
-    public TableView userListTable;
+    public TextField txtNameOld;
+    @FXML
+    public TextField txtSurnameOld;
+    @FXML
+    public TextField txtNumberOld;
+    @FXML
+    public Label lblStatus;
+    @FXML
+    public Label lblFailed;
+    @FXML
+    private TableView userListTable;
+    @FXML
+    private TableColumn tableColumnName;
+    @FXML
+    private TableColumn tableColumnSurname;
+    @FXML
+    private TableColumn tableColumnNumber;
     @FXML
     private TextField txtName;
     @FXML
@@ -24,56 +39,103 @@ public class Controller {
     @FXML
     private TextField txtNumber;
 
-    public void btnSearch(){
-
-    }
-
     public void onClearClick(){
-        txtName.clear();
-        txtNumber.clear();
-        txtSurname.clear();
+        clearTextFields(txtName,txtSurname,txtNumber);
     }
 
     public void onSaveClick(){
+        //check if the inputs are not null
+        if (checkTheInputs(txtName,txtName,txtNumber,lblFailed)){
+            Long number = null;
+            number = Long.valueOf(txtNumber.getText().trim());
+            PhoneBookUsers user = new PhoneBookUsers(txtName.getText().trim(),txtSurname.getText().trim(),number);
+            PhoneBookUsersDOA createUser = new PhoneBookUsersDOA();
 
-        PhoneBookUsers user = new PhoneBookUsers(txtName.getText(),txtSurname.getText(),txtNumber.getText());
-        PhoneBookUsersDOA createUser = new PhoneBookUsersDOA();
-        createUser.addUser(user);
-
-//        userListTable.getItems().removeAll(createUser.getAllPhoneBookUsers());
-
-        populateTheTable(createUser);
-
-        //TODO get all users and show to the list
-
-        //TODO refresh the list, also add the search functionality
-
+            createUser.addUser(user);
+            populateTheTable(createUser);
+            lblFailed.setTextFill(Paint.valueOf("Blue"));
+            lblFailed.setText("User Registered.");
+        }
         onClearClick();
     }
 
-    void populateTheTable(PhoneBookUsersDOA createUser){
+    private Boolean checkTheInputs(TextField name,TextField surname,TextField number,Label lbl){
+        lblFailed.setTextFill(Paint.valueOf("#ec4d37"));
+        boolean check = false;
+        //CHECK IF THE INPUTS ARE NULL OR THE NUMBER IS NOT A NUMBER
+        if (!name.getText().trim().isEmpty() && !surname.getText().trim().isEmpty() && !number.getText().trim().isEmpty()){
+            try {
+                //check if the user writes a number
+                Long.parseLong(number.getText().trim());
+                check= true;
+            } catch (NumberFormatException nfe) {
+//                System.out.println("NumberFormatException: " + nfe.getMessage());
+                lbl.setText("Write a number!");
+            }
+        }else {
+            lbl.setText("The field is empty!");
+        }
+        return check;
+    }
 
-        TableColumn<String, PhoneBookUsers> id = new TableColumn<>("ID");
-        id.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+    private void populateTheTable(PhoneBookUsersDOA createUser){
 
-        TableColumn<String, PhoneBookUsers> creationTime = new TableColumn<>("Creation Date");
-        creationTime.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        //create the table columns
+        tableColumnName.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers, Date>("Name"));
+        tableColumnSurname.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers,String>("Surname"));
+        tableColumnNumber.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers,String>("Number"));
 
-        TableColumn<String, PhoneBookUsers> name = new TableColumn<>("Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        //get the results from database and pass to an Observable List
+        ObservableList<PhoneBookUsers> data = FXCollections.observableArrayList();
+        data.addAll(createUser.getAllPhoneBookUsers());
 
-        TableColumn<String, PhoneBookUsers> surname = new TableColumn<>("Surname");
-        surname.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        userListTable.setItems(data);
+    }
 
-        TableColumn<String, PhoneBookUsers> number = new TableColumn<>("Number");
-        number.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
-        userListTable.getColumns().add(id);
-        userListTable.getColumns().add(creationTime);
-        userListTable.getColumns().add(name);
-        userListTable.getColumns().add(surname);
-        userListTable.getColumns().add(number);
+    public PhoneBookUsers tableClicked(MouseEvent mouseEvent) {
 
-        userListTable.getItems().add(createUser.getAllPhoneBookUsers().get(0));
+        PhoneBookUsers user = (PhoneBookUsers) userListTable.getSelectionModel().getSelectedItem();
+        lblStatus.setText("");//clear the status label
+        txtNameOld.setText(user.getName());
+        txtSurnameOld.setText(user.getSurname());
+        txtNumberOld.setText(String.valueOf(user.getNumber()));
+        return user;
+    }
+
+    public void onUpdateClick(MouseEvent mouseEvent) {
+
+        if (checkTheInputs(txtNameOld,txtSurnameOld,txtNumberOld,lblStatus)){
+            PhoneBookUsers user = (PhoneBookUsers) userListTable.getSelectionModel().getSelectedItem();
+            user.setName(txtNameOld.getText());
+            user.setSurname(txtSurnameOld.getText());
+            user.setNumber(Long.parseLong(txtNumberOld.getText()));
+
+            PhoneBookUsersDOA pu =new PhoneBookUsersDOA();
+            pu.updateUser(user);
+            lblStatus.setText("User updated.");
+
+            clearTextFields(txtNameOld,txtSurnameOld,txtNumberOld);
+            userListTable.refresh();
+        }
+    }
+
+    private void clearTextFields(TextField name, TextField surname, TextField number) {
+        name.clear();
+        surname.clear();
+        number.clear();
+    }
+
+    public void onDeleteClicked(MouseEvent mouseEvent) {
+        if (checkTheInputs(txtNameOld,txtSurnameOld,txtNumberOld,lblStatus)){
+
+            PhoneBookUsers user = (PhoneBookUsers) userListTable.getSelectionModel().getSelectedItem();
+            PhoneBookUsersDOA pu =new PhoneBookUsersDOA();
+            pu.deleteUser(user);
+            lblStatus.setText("User Deleted.");
+
+            clearTextFields(txtNameOld,txtSurnameOld,txtNumberOld);
+            populateTheTable(pu);
+        }
     }
 }

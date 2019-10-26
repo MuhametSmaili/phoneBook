@@ -26,24 +26,20 @@ public class Main extends Application {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         User user = new User();
-        user.setUsername("Test");
+        user.setUsername("Muhamet");
         user.setPassword("123456");
 
         UserDOA userDOA = new UserDOA();
         userDOA.createUser(user);
 
-
         PhoneBookUsers users = new PhoneBookUsers();
         users.setName("Test");
         users.setSurname("Surname");
-        users.setNumber("1245688");
+        users.setNumber(123456L);
 
         PhoneBookUsersDOA phoneBookUsersDOA = new PhoneBookUsersDOA();
         phoneBookUsersDOA.addUser(users);
 
-//        System.out.println(userDOA.getUserByUsername("Test").getPassword());
-
-//        System.out.println(phoneBookUsersDOA.getAllPhoneBookUsers());
         launch(args);
     }
 }
