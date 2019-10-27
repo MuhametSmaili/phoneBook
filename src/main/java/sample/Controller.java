@@ -59,8 +59,8 @@ public class Controller {
         onClearClick();
     }
 
-    private Boolean checkTheInputs(TextField name,TextField surname,TextField number,Label lbl){
-        lblFailed.setTextFill(Paint.valueOf("#ec4d37"));
+    public Boolean checkTheInputs(TextField name,TextField surname,TextField number,Label lbl){
+//        lblFailed.setTextFill(Paint.valueOf("#ec4d37"));
         boolean check = false;
         //CHECK IF THE INPUTS ARE NULL OR THE NUMBER IS NOT A NUMBER
         if (!name.getText().trim().isEmpty() && !surname.getText().trim().isEmpty() && !number.getText().trim().isEmpty()){
