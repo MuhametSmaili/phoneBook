@@ -1,4 +1,4 @@
-package sample;
+package presenter;
 
 import Database.*;
 import javafx.application.Application;
@@ -12,14 +12,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-
-
         Parent root = FXMLLoader.load(Login.class.getResource("/login.fxml"));
         primaryStage.setTitle("Login Page");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 
 
@@ -29,15 +25,15 @@ public class Main extends Application {
         user.setUsername("Muhamet");
         user.setPassword("123456");
 
-        UserDOA userDOA = new UserDOA();
-        userDOA.createUser(user);
+        UserDAO userDAO = new UserDAO();
+        userDAO.createUser(user);
 
         PhoneBookUsers users = new PhoneBookUsers();
         users.setName("Test");
         users.setSurname("Surname");
         users.setNumber(123456L);
 
-        PhoneBookUsersDOA phoneBookUsersDOA = new PhoneBookUsersDOA();
+        PhoneBookUsersDAO phoneBookUsersDOA = new PhoneBookUsersDAO();
         phoneBookUsersDOA.addUser(users);
 
         launch(args);

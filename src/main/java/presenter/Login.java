@@ -1,7 +1,7 @@
-package sample;
+package presenter;
 
 import Database.User;
-import Database.UserDOA;
+import Database.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,8 +30,8 @@ public class Login {
         System.out.println("Login clicked" + txtPassword.getText()+txtUsername.getText());
 
         //when login is pressed check if the user typed correct, if Yes than show the other page otherwise a label with incorrect password;
-        UserDOA userDOA = new UserDOA();
-        User user = userDOA.getUserByUsername(txtUsername.getText());//get the user
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.getUserByUsername(txtUsername.getText());//get the user
 
         if (user != null && user.getPassword().equals(txtPassword.getText())){
             //if password and user matches than get the scene to add users

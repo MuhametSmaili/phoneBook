@@ -5,11 +5,10 @@ import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import sample.Controller;
+import controller.Controller;
 
 
 import javax.swing.*;
-import javax.xml.soap.Text;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.CountDownLatch;

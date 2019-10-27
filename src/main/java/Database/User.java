@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User  extends AbstractEntity{
+public class User extends AbstractEntity{
     @Column
     private String Username;
     @Column

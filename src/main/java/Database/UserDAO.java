@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 
 import java.util.Locale;
 
-public class UserDOA {
+public class UserDAO {
 
     public void createUser(User user) {
         Transaction transaction = null;
@@ -30,7 +30,6 @@ public class UserDOA {
         Transaction transaction = null;
         User user = null;
         try {
-
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("from User where Username=:name",User.class);

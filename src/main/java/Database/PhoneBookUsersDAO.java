@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
 
-public class PhoneBookUsersDOA {
+public class PhoneBookUsersDAO {
 
     public void addUser(PhoneBookUsers users) {
         Transaction transaction = null;
