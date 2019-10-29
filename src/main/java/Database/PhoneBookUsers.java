@@ -18,9 +18,9 @@ public class PhoneBookUsers extends AbstractEntity{
     @Column
     private String Surname;
     @Column
-    private Long Number;
+    private String Number;
 
-    public PhoneBookUsers(String name, String surname, Long number) {
+    public PhoneBookUsers(String name, String surname, String number) {
         Name = name;
         Surname = surname;
         Number = number;
