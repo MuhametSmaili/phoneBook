@@ -2,6 +2,6 @@
 JavaFX 
 
 # Technologies used:
-- JavaFx, Hibernate, MySQL, Project Lombok
+- JavaFx, Java, Hibernate, MySQL, Project Lombok
 
 Muhamet Smaili 2019
