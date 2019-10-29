@@ -4,27 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.util.Locale;
-
-public class UserDOA {
-
-    public void createUser(User user) {
-        Transaction transaction = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            // start a transaction
-            transaction = session.beginTransaction();
-            // save the person object
-            session.save(user);
-            // commit transaction
-            transaction.commit();
-        } catch (Exception ex) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            ex.printStackTrace();
-        }
-    }
+public class UserDOA extends DatabaseHelper{
 
     public User getUserByUsername(String name){
         Transaction transaction = null;
