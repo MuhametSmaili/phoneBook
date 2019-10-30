@@ -7,10 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
 import java.util.Date;
+import java.util.List;
 
 public class Controller {
 
@@ -24,6 +27,8 @@ public class Controller {
     public Label lblStatus;
     @FXML
     public Label lblFailed;
+    @FXML
+    public TextField txtSearch;
     @FXML
     private TableView userListTable;
     @FXML
@@ -49,7 +54,7 @@ public class Controller {
         if (checkTheInputs(txtName,txtName,txtNumber,lblFailed)){
             PhoneBookUsers user = new PhoneBookUsers(txtName.getText().trim(),txtSurname.getText().trim(),txtNumber.getText().trim());
             createUser.addUser(user);
-            populateTheTable(createUser);
+            populateTheTable(createUser.getAllPhoneBookUsers());
             lblFailed.setTextFill(Paint.valueOf("Blue"));
             lblFailed.setText("User Registered.");
         }
@@ -71,14 +76,14 @@ public class Controller {
         return check;
     }
 
-    private void populateTheTable(PhoneBookUsersDOA createUser){
+    private void populateTheTable(List<PhoneBookUsers> users){
         //create the table columns
         tableColumnName.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers, Date>("Name"));
         tableColumnSurname.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers,String>("Surname"));
         tableColumnNumber.setCellValueFactory(new PropertyValueFactory<PhoneBookUsers,String>("Number"));
         //get the results from database and pass to an Observable List
         ObservableList<PhoneBookUsers> data = FXCollections.observableArrayList();
-        data.addAll(createUser.getAllPhoneBookUsers());
+        data.addAll(users);
         userListTable.setItems(data);
     }
 
@@ -124,7 +129,7 @@ public class Controller {
             createUser.deleteUser(selectedUser());//delete the selected user
             lblStatus.setText("User Deleted.");
             clearTextFields(txtNameOld,txtSurnameOld,txtNumberOld);
-            populateTheTable(createUser);
+            populateTheTable(createUser.getAllPhoneBookUsers());
         }
     }
 
@@ -134,5 +139,13 @@ public class Controller {
 
     private static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+
+    public void onSearchText(KeyEvent keyEvent) {
+        List<PhoneBookUsers> phoneBookUsers = createUser.getAllPhoneBookUserByNameOrPhone(txtSearch.getText());
+        populateTheTable(phoneBookUsers);
+        userListTable.refresh();
+        System.out.println(txtSearch.getText());
     }
 }

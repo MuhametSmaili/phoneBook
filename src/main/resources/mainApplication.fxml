@@ -63,7 +63,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="userListTable" layoutX="-1.0" onMouseClicked="#tableClicked" prefHeight="373.0" prefWidth="336.0">
+                  <TableView fx:id="userListTable" layoutX="-1.0" layoutY="35.0" onMouseClicked="#tableClicked" prefHeight="338.0" prefWidth="336.0">
                         <columns>
                            <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Name" />
                             <TableColumn fx:id="tableColumnSurname" prefWidth="75.0" text="Surname" />
@@ -103,13 +103,25 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="txtSearch" layoutX="4.0" layoutY="3.0" onKeyReleased="#onSearchText" prefHeight="28.0" prefWidth="321.0" promptText="Search by name or number">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
                </children>
         </AnchorPane>
       </content>
     </Tab>
       <Tab text="About">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="37.0" layoutY="40.0" prefHeight="192.0" prefWidth="431.0" text="Created by : &#10;&#10;Muhamet Smaili   2019&#10;&#10;&#10;muhametsmaili@gmail.com" textFill="#ff5757">
+                     <font>
+                        <Font name="Broadway" size="18.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
         </content>
       </Tab>
   </tabs>
